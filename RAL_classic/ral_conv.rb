@@ -238,7 +238,9 @@ module YourName
       input = UI.inputbox(prompts, defaults, "RAL to Material Converter")
       return unless input
 
-      ral_code = input.first.upcase
+      # Accepte « RAL9010 », « RAL 9010 », « ral-9010 » ou « 9010 ».
+      digits = input.first.to_s.upcase.gsub(/[^0-9]/, '')
+      ral_code = "RAL#{digits}"
       rgb_values = convert_ral_to_rgb(ral_code)
       unless rgb_values
         UI.messagebox("code RAL non trouvé!")
